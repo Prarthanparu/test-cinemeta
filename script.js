@@ -448,9 +448,9 @@ gsap.to("#page3",{
 
 window.addEventListener("load", function () {
     const loader = document.getElementById("loader");
-    const content = document.getElementById("content");
+    const mainContent = document.getElementById("main");
 
-    // Track the loading of all images
+    // Check if all images are loaded
     let loadedImages = 0;
     const totalImages = images.length;
 
@@ -459,10 +459,8 @@ window.addEventListener("load", function () {
             loadedImages++;
             if (loadedImages === totalImages) {
                 // All images are loaded
-                setTimeout(() => {
-                    loader.style.display = "none";
-                    content.style.display = "block";
-                }, 1000); // Add a slight delay for a smoother transition
+                loader.style.display = "none";
+                mainContent.style.display = "block";
             }
         };
     });
@@ -471,7 +469,7 @@ window.addEventListener("load", function () {
     setTimeout(() => {
         if (loadedImages < totalImages) {
             loader.style.display = "none";
-            content.style.display = "block";
+            mainContent.style.display = "block";
         }
-    }, 20000); // 1 minute fallback
+    }, 5000); // 1 minute fallback
 });
