@@ -445,3 +445,33 @@ gsap.to("#page3",{
     scroller:`#main`
   }
 })
+
+window.addEventListener("load", function () {
+    const loader = document.getElementById("loader");
+    const content = document.getElementById("content");
+
+    // Track the loading of all images
+    let loadedImages = 0;
+    const totalImages = images.length;
+
+    images.forEach((img) => {
+        img.onload = () => {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+                // All images are loaded
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    content.style.display = "block";
+                }, 1000); // Add a slight delay for a smoother transition
+            }
+        };
+    });
+
+    // Fallback: If images take too long, hide the loader after 1 minute
+    setTimeout(() => {
+        if (loadedImages < totalImages) {
+            loader.style.display = "none";
+            content.style.display = "block";
+        }
+    }, 60000); // 1 minute fallback
+});
