@@ -446,6 +446,7 @@ gsap.to("#page3",{
   }
 })
 
+
 window.addEventListener("load", function () {
     const loader = document.getElementById("loader");
     const mainContent = document.getElementById("main");

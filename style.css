@@ -12,6 +12,10 @@ html,body{
     position: relative;
     overflow: hidden;
 }
+#about_main{
+    position: relative;
+    overflow: hidden;
+}
 #page{
     position: relative;
     height: 100vh;
@@ -116,7 +120,7 @@ canvas{
     align-items: center;
     text-align: center;
     justify-content: space-between;
-    height: 10%;
+    height: 7%;
     width: 100%;
     position: fixed;
     z-index: 99;
@@ -129,6 +133,7 @@ canvas{
     gap: 20px;
     align-items: right;
     justify-content: space-between;
+    height: 19%;
     width: 100%;
     cursor: pointer;
 }
@@ -1169,7 +1174,6 @@ input[type=email].form-control {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -1180,17 +1184,11 @@ input[type=email].form-control {
 }
 
 @font-face {
-    font-family: 'AdiHaus';
-    src: url('https://assets.codepen.io/6060109/adihaus_regular.ttf') format('truetype');
+    font-family: 'gilroy';
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
-    font-family: "AdiHaus";
-    src: url("https://assets.codepen.io/6060109/adihaus_bold.ttf") format("truetype");
-    font-weight: bold;
-    font-style: normal;
+    src: url('path/to/gilroy.woff2') format('woff2'),
+         url('path/to/gilroy.woff') format('woff');
 }
 
 *, *::before, *::after {
@@ -1217,7 +1215,6 @@ html, body {
     font-size: 14px;
     height: 100%;
     width: 100%;
-    /* background-image: url(./images/bg/bg_img.png); */
 }
 
 input {
@@ -1256,7 +1253,7 @@ input {
     }
 
 .hero-banner .hero-image {
-    /* background-image: url(./images/bg/bg_img.png); */
+    background-image: url(https://assets.codepen.io/6060109/athlete-girl.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -1279,7 +1276,7 @@ input {
 
     /* intended for the first h2 within .text-info */
     .text-info h2:nth-child(1) {
-        color: goldenrod;
+color: goldenrod;
         font-weight: normal;
         padding-top: 1.8rem;
         padding-bottom: 1rem;
@@ -1333,25 +1330,23 @@ input {
             z-index: 10;
         }
 
-@media only screen and (min-width: 768px) {
-    body {
-        /* background-image: url(./images/bg/bg_img.png); */
+ @media only screen and (min-width: 768px) {
+     .mobile-container_body {
         background-position: center;
-        background-repeat: no-repeat;
         background-size: cover;
         display: flex;
         flex-direction: row;
         height: 100%;
-    }
+    } 
 
-    main {
+     .side_page {
         display: flex;
         flex-direction: column;
         height: inherit;
         max-width: 100%;
         margin: 0 auto;
         padding-left: 3.5rem;
-    }
+    } 
 
     .mobile-container {
         width: 45vw;
@@ -1413,4 +1408,4 @@ input {
     .email-signup .email-submit {
         border-bottom: 2px solid var(--theme-color-black);
     }
-}
+} 
