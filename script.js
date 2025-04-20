@@ -473,5 +473,5 @@ window.addEventListener("load", function () {
             loader.style.display = "none";
             content.style.display = "block";
         }
-    }, 60000); // 1 minute fallback
+    }, 20000); // 1 minute fallback
 });
