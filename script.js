@@ -500,34 +500,80 @@ gsap.from("#text3 h1", {
 });
 
 
-
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get elements
+    const preloader = document.querySelector(".preloader");
+    const mainContent = document.querySelector("#main");
+    const counter = document.getElementById("counter");
+    const progressBar = document.querySelector(".progress");
+    const messages = document.querySelectorAll(".message");
   
+    let currentCount = 0;
+    let targetCount = 100; // Target progress percentage
+    let contentReady = false;
   
-  window.addEventListener("load", function () {
-  const loader = document.getElementById("loader");
-  const mainContent = document.getElementById("main");
+    // Simulate content loading (e.g., images or other assets)
+    const simulateLoading = new Promise((resolve) => {
+      setTimeout(() => {
+        contentReady = true;
+        resolve();
+      }, 3000); // Simulate 3 seconds of loading
+    });
   
-  // Check if all images are loaded
-  let loadedImages = 0;
-  const totalImages = images.length;
+    // Update progress bar and counter
+    function updateProgress(progress) {
+      counter.textContent = progress;
+      progressBar.style.width = `${progress}%`;
   
-  images.forEach((img) => {
-  img.onload = () => {
-  loadedImages++;
-  if (loadedImages === totalImages) {
-  // All images are loaded
-  loader.style.display = "none";
-  mainContent.style.display = "block";
-  }
-  };
+      // Update system messages
+      const messageIndex = Math.floor(progress / 20);
+      messages.forEach((message, index) => {
+        if (index === messageIndex) {
+          message.classList.add("active");
+        } else {
+          message.classList.remove("active");
+        }
+      });
+    }
+  
+    // Animate the progress bar
+    function animateProgress() {
+      const interval = setInterval(() => {
+        if (currentCount < targetCount) {
+          currentCount++;
+          updateProgress(currentCount);
+        } else {
+          clearInterval(interval);
+          if (contentReady) {
+            completeLoading();
+          }
+        }
+      }, 30); // Update every 30ms for a smooth animation
+    }
+  
+    // Complete the loading process
+    function completeLoading() {
+      // Hide the preloader
+      preloader.style.transition = "transform 1s ease, opacity 1s ease";
+      preloader.style.transform = "translateY(-100%)";
+      preloader.style.opacity = "0";
+  
+      // Show the main content
+      setTimeout(() => {
+        preloader.style.display = "none";
+        preloader.style.transform = "translateY(0)"; // Reset for next use
+        preloader.style.opacity = "1"; // Reset for next use
+        mainContent.style.visibility = "visible";
+        mainContent.style.opacity = "1";
+      }, 1000); // Wait for the transition to complete
+    }
+  
+    // Start the loading process
+    simulateLoading.then(() => {
+      if (currentCount >= targetCount) {
+        completeLoading();
+      }
+    });
+  
+    animateProgress();
   });
-  
-  // Fallback: If images take too long, hide the loader after 1 minute
-  setTimeout(() => {
-  if (loadedImages < totalImages) {
-  loader.style.display = "none";
-  mainContent.style.display = "block";
-  }
-  }, 3000); // 1 minute fallback
-  });
-
