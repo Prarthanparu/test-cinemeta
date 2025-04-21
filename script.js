@@ -510,15 +510,38 @@ gsap.from("#text3 h1", {
   
     let currentCount = 0;
     let targetCount = 100; // Target progress percentage
-    let contentReady = false;
+    let imagesLoaded = 0; // Track the number of loaded images
+    const images = document.querySelectorAll("img"); // Get all images on the page
+    const totalImages = images.length; // Total number of images
   
-    // Simulate content loading (e.g., images or other assets)
-    const simulateLoading = new Promise((resolve) => {
-      setTimeout(() => {
-        contentReady = true;
-        resolve();
-      }, 3000); // Simulate 3 seconds of loading
-    });
+    // Function to check if all images are loaded
+    function checkImagesLoaded() {
+      return new Promise((resolve) => {
+        images.forEach((img) => {
+          if (img.complete) {
+            imagesLoaded++;
+          } else {
+            img.addEventListener("load", () => {
+              imagesLoaded++;
+              if (imagesLoaded === totalImages) {
+                resolve();
+              }
+            });
+            img.addEventListener("error", () => {
+              imagesLoaded++; // Count failed images as loaded
+              if (imagesLoaded === totalImages) {
+                resolve();
+              }
+            });
+          }
+        });
+  
+        // If all images are already loaded
+        if (imagesLoaded === totalImages) {
+          resolve();
+        }
+      });
+    }
   
     // Update progress bar and counter
     function updateProgress(progress) {
@@ -544,9 +567,6 @@ gsap.from("#text3 h1", {
           updateProgress(currentCount);
         } else {
           clearInterval(interval);
-          if (contentReady) {
-            completeLoading();
-          }
         }
       }, 30); // Update every 30ms for a smooth animation
     }
@@ -569,10 +589,9 @@ gsap.from("#text3 h1", {
     }
   
     // Start the loading process
-    simulateLoading.then(() => {
-      if (currentCount >= targetCount) {
-        completeLoading();
-      }
+    Promise.all([checkImagesLoaded()]).then(() => {
+      targetCount = 100; // Set progress to 100% when all images are loaded
+      completeLoading();
     });
   
     animateProgress();
